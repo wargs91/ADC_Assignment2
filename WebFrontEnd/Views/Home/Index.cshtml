@@ -1,0 +1,101 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div>
+<form id="loginForm" action="" method="post">
+  	<label>Enter Username</label>
+	<input type="text" name="name" placeholder="Enter your Username"/><br>
+  	<label>Password</label>
+	<input type="password" name="password" placeholder="Enter your Password"/><br>
+  	<input type="button" class="btn btn-default" name="submit" value="Submit"/>
+</form>
+
+<form id = "addCentreName" action="" method="post">
+    <label>Enter Centre Name</label>
+    <input type="text" id = "CentreName" name=" CentreName" placeholder="Enter name of Centre"/>
+    <input type="text" id ="Id" name=" Id" placeholder="Enter ID"/>
+    <button id="insert" onclick="insertCentre()">Insert</button>
+</form>
+
+<form id = "addBooking" action="" method="post">
+    <label>Enter Centre Name</label>
+    <input type="number" id ="Id" name=" Id" placeholder="Enter ID"/>
+    <input type="text" id = "CentreName" name=" CentreName" placeholder="Enter name of Centre"/>
+    <input type="text" id=" userName" name=" userName" placeholder="Please enter Username"/>
+    <input type="date" id=" startDate" name=" startDate" placeholder="Please enter Start Date"/>
+    <input type="date" id=" endDate" name=" endDate" placeholder="Please enter End Date"/>
+    <input type="text" id = "description" name="description" placeholder="Please enter Description"/>
+    <button id="Create" onclick="CreateBooking()">Create</button>
+</form>
+
+</div>
+
+<script>
+function ShowLogin() {
+    
+            $('#loginForm').toggle(500);
+}
+
+function insertCentre()
+
+ { 
+        $.ajax({
+            type: 'POST',
+            url: '/home/insertCentre/',
+            contentType: 'application/json',
+            data: JSON.stringify(
+            {
+                "Id" :$('#Id').val(),
+                "centreName": $('#CentreName').val(),
+                
+                
+            }),
+            success: function(data, textStatus, jQxhr)
+            {
+                alert("Centre Name Inserted");
+            },
+            error: function(xhr, textStatus, error)
+            {
+                alert("Error");
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
+    }
+
+function CreateBooking()
+ { 
+        $.ajax({
+            type: 'POST',
+            url: '/home/createBooking/',
+            contentType: 'application/json',
+            data: JSON.stringify(
+            {
+                "Id" :$('#Id').val(),
+                "bookingCentreName": $('#CentreName').val(),
+                "userName" : $('#userName')
+                "startDate" : $('#startDate')
+                "endDate" : $('#endDate')
+                "description" : $('#description')
+                
+                
+            }),
+            success: function(data, textStatus, jQxhr)
+            {
+                alert("Booking Created");
+            },
+            error: function(xhr, textStatus, error)
+            {
+                alert("Error");
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
+    }
+
+</script>

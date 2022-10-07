@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="centreBookingsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AdminCentreName">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="AdminCentreName" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="BookingItems">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="centreName" Type="varchar(max)" Nullable="false" />
+    <Property Name="userName" Type="varchar(max)" Nullable="false" />
+    <Property Name="startDate" Type="date" Nullable="false" />
+    <Property Name="endDate" Type="date" Nullable="false" />
+    <Property Name="description" Type="varchar(max)" />
+  </EntityType>
+  <EntityContainer Name="centreBookingsDBModelStoreContainer">
+    <EntitySet Name="AdminCentreName" EntityType="Self.AdminCentreName" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BookingItems" EntityType="Self.BookingItems" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
