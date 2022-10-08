@@ -5,19 +5,23 @@
 }
 
 <div>
-<form id="loginForm" action="" method="post">
-  	<label>Enter Username</label>
-	<input type="text" name="name" placeholder="Enter your Username"/><br>
-  	<label>Password</label>
-	<input type="password" name="password" placeholder="Enter your Password"/><br>
-  	<input type="button" class="btn btn-default" name="submit" value="Submit"/>
+<form id="loginForm" action="">
+    <fieldset>
+  	    <label>Enter Username</label>
+	    <input type="text" name="name" placeholder="Enter your Username"/>
+  	    <label>Password</label>
+	    <input type="password" name="password" placeholder="Enter your Password"/>
+  	    <button id="login" onclick="login()">Login</button>
+    </fieldset>
 </form>
 
 <form id = "addCentreName" action="" method="post">
-    <label>Enter Centre Name</label>
-    <input type="text" id = "CentreName" name=" CentreName" placeholder="Enter name of Centre"/>
-    <input type="text" id ="Id" name=" Id" placeholder="Enter ID"/>
-    <button id="insert" onclick="insertCentre()">Insert</button>
+    <fieldset>
+        <label>Enter Centre Name</label>
+        <input type="text" id = "CentreName" name=" CentreName" placeholder="Enter name of Centre"/>
+        <input type="text" id ="Id" name=" Id" placeholder="Enter ID"/>
+        <button id="insert" onclick="insertCentre()">Insert</button>
+    </fieldset>
 </form>
 
 <form id = "addBooking" action="" method="post">
@@ -34,11 +38,19 @@
 </div>
 
 <script>
-function ShowLogin() {
-    
-            $('#loginForm').toggle(500);
+function login() 
+{
+    const name = loginForm.name.val;
+    const password = loginForm.password.val;
+        
+    if (name == "admin" && password == "adminpass") {
+        //Display other stuff
+        alert("Login Successful");
+    }
+    else { 
+        alert("Login Unsuccessful");
+    }
 }
-
 function insertCentre()
 
  { 
