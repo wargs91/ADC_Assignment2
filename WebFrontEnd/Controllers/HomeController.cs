@@ -10,8 +10,12 @@ namespace WebFrontEnd.Controllers
     {
         public IActionResult Index()
         {
-            ViewBag.Title = "Home";
-            return View();
+            RestClient restClient = new RestClient("http://localhost:49990/");
+            RestRequest restRequest = new RestRequest("api/AdminCentreNames", Method.Get);
+            RestResponse restResponse = restClient.Execute(restRequest);
+
+            List<AdminCentreName> centres = JsonConvert.DeserializeObject<List<AdminCentreName>>(restResponse.Content);
+            return View(centres);
         }
 
         [HttpPost]
