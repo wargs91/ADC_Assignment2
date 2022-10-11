@@ -85,11 +85,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\source\\repos\\ADC_Assignment2_V3\\WebFrontEnd\\WebFrontEnd.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Source\\Repos\\ADC_Assignment2_v4\\WebFrontEnd\\WebFrontEnd.csproj",
       "projectName": "WebFrontEnd",
-      "projectPath": "C:\\Users\\User\\source\\repos\\ADC_Assignment2_V3\\WebFrontEnd\\WebFrontEnd.csproj",
+      "projectPath": "C:\\Users\\User\\Source\\Repos\\ADC_Assignment2_v4\\WebFrontEnd\\WebFrontEnd.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\source\\repos\\ADC_Assignment2_V3\\WebFrontEnd\\obj\\",
+      "outputPath": "C:\\Users\\User\\Source\\Repos\\ADC_Assignment2_v4\\WebFrontEnd\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

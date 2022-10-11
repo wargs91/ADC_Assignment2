@@ -5,9 +5,8 @@
 }
     @using WebFrontEnd.Models;
    @model IEnumerable<AdminCentreName>;
-    //how do I make multiple models?
+  
 
-<div class="master" id="master">
 
 <div class="admin-user" id="admin-user">
     <fieldset>
@@ -16,8 +15,22 @@
         <button id="user" onclick="ShowUser()">User</button>
     </fieldset>
 </div>
+<script>
 
-<div class="loginForm" id="loginForm" hidden>
+function ShowLogin()
+{
+    document.getElementById('LoginForm').hidden = false;
+   
+}
+
+function ShowUser()
+{
+    document.getElementById('UserOptions').hidden = false;
+}
+
+</script>
+
+<div id="LoginForm" hidden>
    
     <form id="loginForm" action="">
         <fieldset>
@@ -25,11 +38,31 @@
 	        <input type="text" name="name" placeholder="Enter your Username"/>
   	        <label>Password</label>
 	        <input type="password" name="password" placeholder="Enter your Password"/>
-  	        <button id="login" onclick="login()">Login</button>
+  	        <button id="login" onclick="Login()">Login</button>
         </fieldset>
     </form>
        
 </div>
+
+<script>
+
+function Login() {
+    //var name = document.loginForm.name.value;
+    //var password = document.loginForm.password.value;
+      
+    document.getElementById('AdminOptions').hidden = false;
+    //if ((name).equals('admin') && (password).equals('adminpass')) {
+        
+      //  document.getElementById('AdminOptions').hidden = false;
+        //alert("Login Successful");
+    //}
+    //else { 
+      //  alert("Login Unsuccessful");
+    //}
+    //this doesn't like me//
+}
+
+</script>
 
 <div class="AdminOptions" id="AdminOptions" hidden>
     <fieldset>
@@ -40,91 +73,32 @@
     </fieldset>
 </div>
 
-<div class="AddCentre" id="AddCentre" hidden>
-<form id = "addCentreName" action="" method="post">
-    <fieldset>
-        <label>Enter Centre Name</label>
-        <input type="text" id = "CentreName" name=" CentreName" placeholder="Enter name of Centre"/>
-        <input type="text" id ="Id" name=" Id" placeholder="Enter ID"/>
-        <button id="insert" onclick="insertCentre()">Insert</button>
-    </fieldset>
-</form>
-</div>
-   
-
-<div id="AllCentres">
-    <h1>Select Centre to View Bookings</h1>   
-   <select id="centreList">     
-    @foreach(var adminCentreName in Model)
-    {
-    <option value="@adminCentreName.centreName" selected >@adminCentreName.centreName</option>
-    }
-   </select>    
-   <button id="ShowBooking" onclick="ShowBookings()">Show Bookings</button> 
-</div>
-
-<div id="Centres" hidden>
-    
-    list of centres;
-    on slection put centrename th
-
 <script>
 
-function ShowLogin()
-{
-    document.getElementById('loginForm').hidden = false;
-   
+function ShowAllCentres() {
+document.getElementById('AllCentres').hidden = false;
 }
-
-function ShowUser()
-
-function login() 
-{
-    const name = loginForm.name.val;
-    const password = loginForm.password.val;
-      
-    if (name == "admin" && password == "adminpass") {
-        
-        document.getElementById('AdminOptions').hidden = false;
-        alert("Login Successful");
-    }
-    else { 
-        alert("Login Unsuccessful");
-    }
-}
-rough bookings search
-
-    for i < lenght
-
-</div>
-
-<div id="userOptions" hidden>
-    <button id="allCentres" onclick="ShowAllCentres()">All Centres</button>
-    <button id="showNextBooking" onclick="ShowNextBooking()">Show Bookings</button>
-    <input type="text" id="SearchVal" name="searchName" placeholder="Enter Search Term"/>
-    <button id="search" onclick="SeachBooking">Search</button>
-</div>
-    
-<div class="AddBooking" id="AddCentre" hidden>
-    <form id = "addBooking" action="" method="post">
-        <label>Enter Centre Name</label>
-        <input type="number" id ="Id" name=" Id" placeholder="Enter ID"/>
-        <input type="text" id = "CentreName" name=" CentreName" placeholder="Enter name of Centre"/>
-        <input type="text" id=" userName" name=" userName" placeholder="Please enter Username"/>
-        <input type="date" id=" startDate" name=" startDate" placeholder="Please enter Start Date"/>
-        <input type="date" id=" endDate" name=" endDate" placeholder="Please enter End Date"/>
-        <input type="text" id = "description" name="description" placeholder="Please enter Description"/>
-        <button id="Create" onclick="CreateBooking()">Create</button>
-    </form>
-</div>
-</div>
-
 
 function AddCentre() {
     document.getElementById('AddCentre').hidden = false;
 }
 
-function insertCentre()
+</script>
+
+<div class="AddCentre" id="AddCentre" hidden>
+<form id = "addCentreName" action="" method="post">
+    <fieldset>
+        <label>Enter Centre Name</label>
+        <input type="text" id = "AdminCentreName" name=" CentreName" placeholder="Enter name of Centre"/>
+        <input type="text" id ="AdminId" name=" Id" placeholder="Enter ID"/>
+        <button id="insert" onclick="InsertCentre()">Insert</button>
+    </fieldset>
+</form>
+</div>
+   
+<script>
+        
+function InsertCentre()
 
  { 
         $.ajax({
@@ -150,45 +124,99 @@ function insertCentre()
                 console.log(error);
             }
         });
-    }
+ }
 
-function ShowAllCentres() {
-    document.getElementById('AllCentres').hidden = false;
+</script>
+
+<div id="AllCentres" hidden>
+    <h1>Select Centre to View Bookings</h1>   
+   <select id="centreList">     
+    @foreach(var adminCentreName in Model)
+    {
+    <option value="@adminCentreName.centreName" selected >@adminCentreName.centreName</option>
+    }
+   </select>    
+   <button id="ShowBooking" onclick="ShowBookings()">Show Bookings</button> 
+</div>
+
+<script>
+
+function ShowBooking() {
+    var search = document.querySelector('#centreList');//is this correct?
+    //feed back into search function to pass back and query database
+    $.ajax({
+        type: 'POST',
+        url: '/home/AdminSearch/',
+        contentType: 'application/json',
+        data: JSON.stringify(
+            {
+                "search": $(search)
+
+            }
+            //how do I display the result
+
 }
 
-function CreateBooking()
- { 
-        $.ajax({
+</script>
+ 
+
+<div id="UserOptions" hidden>
+
+    <fieldset>
+        <label>Choose User Option</label>
+        <button id="allCentres" onclick="UserShowAllCentres()">All Centres</button>
+        <input type="text" id ="UserSearch" name="UserSearch" placeholder="Enter Search"/>
+        <button id="searchCentre" onclick="SearchCentre()">Search Centres</button>
+        <button id="CreateBooking" onclick="CreateBooking()">Create Booking</button>
+    </fieldset>
+
+</div>
+
+
+
+<script>
+
+function CreateBooking() {
+            $.ajax({
+                type: 'POST',
+                url: '/home/createBooking/',
+                contentType: 'application/json',
+                data: JSON.stringify(
+                    {
+                        "Id": $('#Id').val(),
+                        "bookingCentreName": $('#CentreName').val(),
+                        "userName": $('#userName'),
+                        "startDate": $('#startDate'),
+                        "endDate": $('#endDate'),
+                        "description": $('#description'),
+
+                    }),
+                success: function(data, textStatus, jQxhr) {
+                    alert("Booking Created");
+                },
+                error: function(xhr, textStatus, error) {
+                    alert("Error");
+                    console.log(xhr.statusText);
+                    console.log(textStatus);
+                    console.log(error);
+                }
+            });
+        }
+
+function SearchCentre() {
+     
+    var search = document.querySelector('#centreList');//is this correct?
+    $.ajax({
             type: 'POST',
-            url: '/home/createBooking/',
+            url: '/home/UserSearch/',
             contentType: 'application/json',
             data: JSON.stringify(
             {
-                "Id" :$('#Id').val(),
-                "bookingCentreName": $('#CentreName').val(),
-                "userName" : $('#userName')
-                "startDate" : $('#startDate')
-                "endDate" : $('#endDate')
-                "description" : $('#description')
-                
-            }),
-            success: function(data, textStatus, jQxhr)
-            {
-                alert("Booking Created");
-            },
-            error: function(xhr, textStatus, error)
-            {
-                alert("Error");
-                console.log(xhr.statusText);
-                console.log(textStatus);
-                console.log(error);
-            }
-        });
-    }
+                "search" :$(UserSearch)
 
-function ShowBooking() {
-    HTMLSelectElement = document.querySelector('#centreList');
-    //feed back into search function to pass back and query database
+            }
+            //how do I display the result
 }
+
 
 </script>

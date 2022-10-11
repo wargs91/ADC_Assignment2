@@ -55,5 +55,43 @@ namespace WebFrontEnd.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPost]
+        public IActionResult AdminSearch([FromBody] string search)
+        {
+            RestClient restClient = new RestClient("http://localhost:49990/");
+            RestRequest restRequest = new RestRequest("api/Search", Method.Post);
+            restRequest.AddJsonBody(JsonConvert.SerializeObject(search));
+            RestResponse restResponse = restClient.Execute(restRequest);
+
+            List<CentreBooking> AdminBookingList = JsonConvert.DeserializeObject<List<CentreBooking>>(restResponse.Content);
+            if (AdminBookingList != null)
+            {
+                return Ok(AdminBookingList);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        
+        [HttpPost]
+        public IActionResult UserSearch([FromBody] string search)
+        {
+            RestClient restClient = new RestClient("http://localhost:49990/");
+            RestRequest restRequest = new RestRequest("api/UserSearch", Method.Post);
+            restRequest.AddJsonBody(JsonConvert.SerializeObject(search));
+            RestResponse restResponse = restClient.Execute(restRequest);
+
+            List<AdminCentreName> AdminBookingList = JsonConvert.DeserializeObject<List<AdminCentreName>>(restResponse.Content);
+            if (AdminBookingList != null)
+            {
+                return Ok(AdminBookingList);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }
