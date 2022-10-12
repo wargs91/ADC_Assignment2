@@ -64,17 +64,18 @@ namespace WebFrontEnd.Controllers
             restRequest.AddJsonBody(JsonConvert.SerializeObject(search));
             RestResponse restResponse = restClient.Execute(restRequest);
 
-            List<CentreBooking> AdminBookingList = JsonConvert.DeserializeObject<List<CentreBooking>>(restResponse.Content);
-            if (AdminBookingList != null)
+            List<CentreBooking> CentreList = JsonConvert.DeserializeObject<List<CentreBooking>>(restResponse.Content);
+            
+            if (CentreList != null)
             {
-                return Ok(AdminBookingList);
+                return Ok(CentreList);
             }
             else
             {
                 return BadRequest();
             }
         }
-        
+
         [HttpPost]
         public IActionResult UserSearch([FromBody] string search)
         {
@@ -83,10 +84,37 @@ namespace WebFrontEnd.Controllers
             restRequest.AddJsonBody(JsonConvert.SerializeObject(search));
             RestResponse restResponse = restClient.Execute(restRequest);
 
-            List<AdminCentreName> AdminBookingList = JsonConvert.DeserializeObject<List<AdminCentreName>>(restResponse.Content);
-            if (AdminBookingList != null)
+            List<AdminCentreName> ReturnBookingList = JsonConvert.DeserializeObject<List<AdminCentreName>>(restResponse.Content);
+
+
+
+            if (ReturnBookingList != null)
             {
-                return Ok(AdminBookingList);
+                return Ok(ReturnBookingList);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost] //THis needs to link to the booking search controller, then only display the next available booking
+        public IActionResult UserBookingSearch([FromBody] string search)
+        {
+            RestClient restClient = new RestClient("http://localhost:49990/");
+            RestRequest restRequest = new RestRequest("api/Search", Method.Post);
+            restRequest.AddJsonBody(JsonConvert.SerializeObject(search));
+            RestResponse restResponse = restClient.Execute(restRequest);
+
+            List<CentreBooking> AdminBookingList = JsonConvert.DeserializeObject<List<CentreBooking>>(restResponse.Content);
+
+            DateOnly nextAvailabe = AdminBookingList.Find(AdminBookingList.endDate > DateTime.Now) + 1; //Confirm if this is how this works
+
+            
+            
+            if (nextAvailabe != null)
+            {
+                return Ok(nextAvailabe);
             }
             else
             {
